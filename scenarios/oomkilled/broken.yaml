@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: oom-demo
+  namespace: sre-lab
+spec:
+  restartPolicy: Always
+  containers:
+    - name: app
+      image: python:3.12-alpine
+      command:
+        - python
+        - -c
+        - |
+          import time
+          chunks = []
+          while True:
+              chunks.append(bytearray(1024 * 1024))
+              time.sleep(0.05)
+      resources:
+        requests:
+          memory: 16Mi
+        limits:
+          memory: 32Mi

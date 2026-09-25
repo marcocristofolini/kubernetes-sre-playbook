@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ephemeral-storage-demo-fixed
+  namespace: sre-lab
+spec:
+  containers:
+    - name: writer
+      image: busybox:1.36
+      command: ["sh", "-c", "dd if=/dev/zero of=/tmp/data bs=1M count=4; sleep 3600"]
+      resources:
+        requests:
+          ephemeral-storage: 32Mi
+        limits:
+          ephemeral-storage: 128Mi
